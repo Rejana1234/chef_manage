@@ -76,7 +76,7 @@ export default {
        });
 
        return {
-           countries: [],
+           users: [],
            columns: columns,
            sortKey: 'id',
            sortOrders: sortOrders,
@@ -108,17 +108,17 @@ export default {
         ...mapState({
             //countries: state => state.country.countries,
             //pag: state => state.country.pagination,
-            message: state => state.country.success_message
+            message: state => state.user.success_message
         })
     },
 
     mounted(){
-       this.getAllCountry();
+       this.getAllUser();
     },
 
     methods: {
 
-       getAllCountry(){
+       getAllUser(){
 
            this.tableData.draw++;
            let params = new URLSearchParams();
@@ -131,7 +131,7 @@ export default {
 
            return http().get('v1/country/getData?'+params)
                .then(response => {
-                   this.countries = response.data.data.data;
+                   this.users = response.data.data.data;
                    this.pagination = response.data.data;
                })
                .catch(error => {
@@ -144,18 +144,18 @@ export default {
             this.sortOrders[key] = this.sortOrders[key] * -1;
             this.tableData.column = this.getIndex(this.columns, 'name', key);
             this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
-            this.getAllCountry();
+            this.getAllUser();
         },
 
         getIndex(array, key, value) {
             return array.findIndex(i => i[key] == value)
         },
 
-        deleteCountry: async function(country){
+        deleteUser: async function(user){
            try {
-               let country_id = country.id;
+               let user_id = user.id;
 
-               await this.$store.dispatch('country/delete_country', country_id).then(() => {
+               await this.$store.dispatch('user/delete_user', user_id).then(() => {
                    this.$swal.fire({
                        toast: true,
                        position: 'top-end',
@@ -164,7 +164,7 @@ export default {
                        showConfirmButton: false,
                        timer: 1500
                    });
-                   this.getAllCountry();
+                   this.getAllUser();
                })
            }catch (e) {
                console.log(e);
@@ -180,7 +180,7 @@ export default {
     text-align: center;
     margin-bottom: 0.5%;
 }
-.add-country{
+.add-user{
     display:flex;
     justify-content: flex-end;
    margin-bottom: 3%;

@@ -1,4 +1,5 @@
 import Dashboard from '../../views/admin/Mydashboard';
+import UserRouter from './UserRouter';
 
 //child router in admin
 // import CountryRouter from './CountryRouter';
@@ -31,7 +32,7 @@ export default[
                 component: () => import('../../views/admin/Home.vue')
             },
 
-            // ...CountryRouter,
+            ...UserRouter,
             // ...DistrictRouter,
             // ...DivisionRouter,
             // ...ThanaRouter,
