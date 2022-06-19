@@ -1,38 +1,40 @@
 <template>
-   <div id="users">
+   <div id="products">
 
+       <div class="add-product">
+           <router-link to="/dashboard/addproduct">
+               <button class="add_new"><i class="fa-solid fa-circle-plus"></i> Add New</button>
+           </router-link>
+       </div>
 
         <div class="field">
           <div for="entries">Show:
-             <select  name="entries" id="entries" v-model="tableData.length" @change="getAllUser()">
+             <select  name="entries" id="entries" v-model="tableData.length" @change="getAllProduct()">
                  <option v-for="(records, index) in perPage" :key="index" :value="records">{{records}}</option>
              </select>
              Entries
           </div>
 
           <div class="search">
-              <input type="text" v-model="tableData.search" placeholder="Search User" @input="getAllUser()">
+              <input type="text" v-model="tableData.search" placeholder="Search Coupon" @input="getAllProduct()">
           </div>
         </div>
 
        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
            <tbody>
-            <tr v-show="users.length" v-for="(user) in users" :key="user.id">
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.dob }}</td>
-                <td>{{ user.p_no }}</td>
-                <td>{{ user.gender }}</td>
-                <td>{{ user.address }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.con_password }}</td>
+            <tr v-show="products.length" v-for="(product) in coupons" :key="product.id">
+                <!-- <td>{{ index + 1 }}</td> -->
+                <td>{{ coupon.id }}</td>
+                <td>{{ coupon.title }}</td>
+                <td>{{ coupon.code }}</td>
+                <td>{{ coupon.price }}</td>
+                <td>{{ coupon.status }}</td>
                 <td colspan="2">
-                    <router-link :to="`/dashboard/edit_user/${user.id}`">
+                    <router-link :to="`/dashboard/edit_coupon/${coupon.id}`">
                         <button class="Edit"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                     </router-link>
 
-                    <button class="delete" v-on:click="deleteUser(user)"><i class="fa-solid fa-trash"></i>  Delete</button>
+                    <button class="delete" v-on:click="deleteCoupon(coupon)"><i class="fa-solid fa-trash"></i>  Delete</button>
                 </td>
             </tr>
            </tbody>
@@ -41,7 +43,7 @@
         <div class="field">
             <div><h5> Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} entries</h5> </div>
 
-            <pagination :pagination.sync="pagination" :offset="5" @paginate="getAllUser();"></pagination>
+            <pagination :pagination.sync="pagination" :offset="5" @paginate="getAllCoupon();"></pagination>
         </div>
    </div>	
 </template>
@@ -55,7 +57,7 @@ import {mapState} from 'vuex';
 import { http } from '../../../service/http_service';
 
 export default {
-   name: 'MyUser',
+   name: 'MyCoupon',
 
    components: {
        datatable: DataTable,
@@ -65,15 +67,11 @@ export default {
    data() {
        let sortOrders = {};
        let columns = [
-           {label: '#Sl', name: 'user_id' },
-           {label: 'Name', name: 'name'},
-           {label: 'Email', name: 'email'},
-           {label: 'DOB', name: 'dob'},
-           {label: 'Phone', name: 'p_no'},
-           {label: 'Gender', name: 'gender'},
-           {label: 'Address', name: 'address'},
-           {label: 'Password', name: 'password'},
-           {label: 'Con_Password', name: 'con_password'},
+           {label: '#Sl', name: 'id' },
+           {label: 'Title', name: 'title'},
+           {label: 'Code', name: 'code'},
+           {label: 'Price', name: 'price'},
+           {label: 'Status', name: 'status'},
            {label: 'Action', name: 'action'},
        ];
        columns.forEach((column) => {
@@ -81,7 +79,7 @@ export default {
        });
 
        return {
-           users: [],
+           coupons: [],
            columns: columns,
            sortKey: 'id',
            sortOrders: sortOrders,
@@ -112,17 +110,17 @@ export default {
     computed: {
         ...mapState({
             
-            message: state => state.user.success_message
+            message: state => state.coupon.success_message
         })
     },
 
     mounted(){
-       this.getAllUser();
+       this.getAllCoupon();
     },
 
     methods: {
 
-       getAllUser(){
+       getAllCoupon(){
 
            this.tableData.draw++;
            let params = new URLSearchParams();
@@ -133,9 +131,9 @@ export default {
            params.append('column', this.tableData.column);
            params.append('dir', this.tableData.dir);
 
-           return http().get('v1/country/getData?'+params)
+           return http().get('country/getData?'+params)
                .then(response => {
-                   this.users = response.data.data.data;
+                   this.coupons = response.data.data.data;
                    this.pagination = response.data.data;
                })
                .catch(error => {
@@ -148,32 +146,32 @@ export default {
             this.sortOrders[key] = this.sortOrders[key] * -1;
             this.tableData.column = this.getIndex(this.columns, 'name', key);
             this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
-            this.getAllUser();
+            this.getAllCoupon();
         },
 
         getIndex(array, key, value) {
             return array.findIndex(i => i[key] == value)
         },
 
-        deleteUser: async function(user){
-           try {
-               let user_id = user.id;
+        // deleteCoupon: async function(coupon){
+        //    try {
+        //        let coupon_id = coupon.id;
 
-               await this.$store.dispatch('user/delete_user', user_id).then(() => {
-                   this.$swal.fire({
-                       toast: true,
-                       position: 'top-end',
-                       icon: 'success',
-                       title: this.message,
-                       showConfirmButton: false,
-                       timer: 1500
-                   });
-                   this.getAllUser();
-               })
-           }catch (e) {
-               console.log(e);
-           }
-        }
+        //        await this.$store.dispatch('coupon/delete_coupon', coupon_id).then(() => {
+        //            this.$swal.fire({
+        //                toast: true,
+        //                position: 'top-end',
+        //                icon: 'success',
+        //                title: this.message,
+        //                showConfirmButton: false,
+        //                timer: 1500
+        //            });
+        //            this.getAllCoupon();
+        //        })
+        //    }catch (e) {
+        //        console.log(e);
+        //    }
+        // }
 
     },
 };
@@ -184,7 +182,7 @@ export default {
     text-align: center;
     margin-bottom: 0.5%;
 }
-.add-user{
+.add-product{
     display:flex;
     justify-content: flex-end;
    margin-bottom: 3%;

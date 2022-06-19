@@ -1,8 +1,7 @@
 <template>
     <div id="login">
         <form action="" class="login-form">
-            <img src="../../assets/My project.png" alt="Logo" width="100" height="100"><br><br>
-            <!-- <h1 class="login_heading">Login now</h1> -->
+            <img src="../../assets/chef_logo.jpg" alt="Logo" width="100" height="100"><br><br>
 
             <input type="email" name="email" id="" placeholder="Enter email" class="box">
             <input type="password" name="password" id="" placeholder="Enter password" class="box">
@@ -15,7 +14,7 @@
 
 <script>
 export default{
-    name : 'BarcLogin'
+    name : 'CMSLogin'
 }
 </script>
 
@@ -35,7 +34,7 @@ export default{
     top: 10%;
     padding: 2rem;
     border-radius: .5rem;
-    background: rgb(164, 232, 171);
+    background: rgb(218, 164, 232);
     box-shadow: var(--box-shadow);
 }
 

@@ -356,7 +356,7 @@ main .info-data {
 main .info-data .card {
 	padding: 20px;
 	border-radius: 8px;
-	background: rgb(241, 243, 154);
+	background: rgb(218, 164, 232);
 	box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
 }
 main .card .head {

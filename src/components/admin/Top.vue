@@ -18,7 +18,7 @@
 			</a>
 			<span class="divider"></span>
 			<div class="profile" >
-				<img src="../../assets/My project.png" alt="" @click="profileDropdown()">
+				<img src="../../assets/chef_logo.jpg" alt="" @click="profileDropdown()">
 				<ul class="profile-link"  v-bind:class="{show: isshow}">
 					<li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
 					<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>

@@ -3,7 +3,7 @@
     <div id="ResetPassword">
         <form action="" class="ResetPassword-form">
             
-            <img src="../../assets/My project.png" alt="Logo" width="100" height="100"><br><br>
+            <img src="../../assets/chef_logo.jpg" alt="Logo" width="100" height="100"><br><br>
             <!-- <h1>Reset Password</h1> -->
  
             <div class="form-group">
@@ -60,7 +60,7 @@ export default {
     top: 15%;
     padding: 2rem;
     border-radius: .5rem;
-    background: rgb(164, 232, 171);
+    background: rgb(207, 164, 232);
     box-shadow: var(--box-shadow);
 }
 

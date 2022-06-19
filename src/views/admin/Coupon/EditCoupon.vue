@@ -1,37 +1,26 @@
 <template>
-    <div id="EditUser">
-        <form class="EditUser-form" v-on:submit.prevent="editUser">
-            <h2>Edit User</h2>
+    <div id="EditCoupon">
+        <form class="EditCoupon-form" v-on:submit.prevent="editCoupon">
+            <h2>Edit Coupon</h2>
             <div class="form-group">
-                <input type="name" v-model="editUserList.name" name="name" id="name" placeholder="Enter User Name" class="box">
+                <input type="name" v-model="editCouponList.title" name="title" id="title" placeholder="Enter Coupon Title" class="box">
 
             </div>
             <div class="form-group">
-                <input type="name" v-model="editUserList.email" name="email" id="email" placeholder="Enter Your Email" class="box">
+                <input type="name" v-model="editCouponList.code" name="code" id="code" placeholder="Enter Coupon Code" class="box">
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="editUserList.dob" name="dob" id="dob" placeholder="Enter Your DOB" class="box">
+                <input type="name" v-model="editCouponList.price" name="price" id="price" placeholder="Enter Coupon Price" class="box">
 
             </div>
             <div class="form-group">
-                <input type="name" v-model="editUserList.p_no" name="p_no" id="p_no" placeholder="Enter Your Phone number" class="box">
-            </div>
-            <div class="form-group">
-                <input type="name" v-model="editUserList.address" name="address" id="address" placeholder="Enter your Address" class="box">
-            </div>
-
-            <div class="form-group">
-                <input type="name" v-model="editUserList.password" name="password" id="password" placeholder="Enter The Password" class="box">
-
-            </div>
-            <div class="form-group">
-                <input type="name" v-model="editUserList.con_password" name="con_password" id="con_password" placeholder="Enter Con_Password Name(BN)" class="box">
+                <input type="name" v-model="editCoupon.status" name="status" id="status" placeholder="Enter Coupon Status" class="box">
             </div>
 
             <div class="button">
                 <level>
-                    <router-link to="/dashboard/user">
+                    <router-link to="/dashboard/coupon">
                         <button type="button"> Back </button>
                     </router-link>
                 </level>
@@ -49,7 +38,7 @@
     import {mapState, mapActions} from 'vuex';
 
     export default {
-        name: 'MyEditUser',
+        name: 'MyEditCoupon',
 
         data(){
             return{
@@ -59,35 +48,32 @@
 
         computed: {
             ...mapState({
-                editUserList: state => state.user.user,
-                message: state => state.user.success_message
+                editCouponList: state => state.coupon.coupon,
+                message: state => state.coupon.success_message
             })
         },
 
         mounted(){
-            this.getEditUser(this.$route.params.id);
+            this.getEditCoupon(this.$route.params.id);
         },
 
         methods: {
             ...mapActions({
-                getEditUser: 'user/edit_user'
+                getEditCoupo: 'coupon/edit_coupon'
             }),
 
-            editUser: async function(){
+            editCountry: async function(){
                 try {
                     let id = this.$route.params.id;
                     let formData = new FormData();
 
-                    formData.append('name', this.editUserList.name);
-                    formData.append('email', this.editUserList.email);
-                    formData.append('dob', this.editUserList.dob);
-                    formData.append('p_no', this.editUserList.p_no);
-                    formData.append('address', this.editUserList.address);
-                    formData.append('password', this.editUserList.password);
-                    formData.append('con_password', this.editUserList.con_password);
+                    formData.append('title', this.editCouponList.title);
+                    formData.append('code', this.editCouponList.code);
+                    formData.append('price', this.editCouponList.price);
+                    formData.append('status', this.editCouponList.status);
                     formData.append('_method', 'PUT');
 
-                    await this.$store.dispatch('user/update_user', {id:id, data:formData}).then(() => {
+                    await this.$store.dispatch('coupon/update_coupon', {id:id, data:formData}).then(() => {
                         this.$swal.fire({
                             toast: true,
                             position: 'top-end',
@@ -96,7 +82,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        this.getEditUser(this.$route.params.id);
+                        this.getEditCoupon(this.$route.params.id);
                     })
 
                 }catch (e) {
@@ -108,7 +94,7 @@
 </script>
 
 <style scoped>
-    .AddUser-form{
+    .AddCoupon-form{
         width: 96rem;
         position: absolute;
         text-align: center;
@@ -118,11 +104,11 @@
         background:#eee;
         box-shadow: var(--box-shadow);
     }
-    .AddUser-form h2{
+    .AddCoupon-form h2{
         display: flex;
         justify-content: left;
     }
-    .AddUser-form .box{
+    .AddCoupon-form .box{
         width: 100%;
         margin: .7rem 0;
         background: rgb(252, 250, 252);
@@ -133,13 +119,13 @@
         text-transform: none;
     }
 
-    .AddUser-form p{
+    .AddCoupon-form p{
         font-size: 1.4rem;
         padding: .5rem 0;
         color: var(--light-color);
     }
 
-    .AddUser-form p a{
+    .AddCoupon-form p a{
         color: var(--orange);
         text-decoration: underline;
     }
@@ -163,13 +149,13 @@
         font-size: 12px;
     }
 
-#EditUser{
+#EditCoupon{
     display: flex;
     justify-content: center;
     margin-top: 100rem;
 }
 
-.EditUser-form{
+.EditCoupon-form{
     width: 95%;
     position: absolute;
     text-align: center;
@@ -179,11 +165,11 @@
     background:#eee;
     box-shadow: var(--box-shadow);
 }
-.EditUser-form h2{
+.EditCoupon-form h2{
     display: flex;
     justify-content: left;
 }
- .EditUser-form .box{
+ .EditCoupon-form .box{
     width: 100%;
     margin: .7rem 0;
     background: rgb(252, 250, 252);
@@ -194,13 +180,13 @@
     text-transform: none;
 }
 
-.EditUser-form p{
+.EditCoupon-form p{
     font-size: 1.4rem;
     padding: .5rem 0;
     color: var(--light-color);
 }
 
-.EditUser-form p a{
+.EditCoupon-form p a{
     color: var(--orange);
     text-decoration: underline;
 }

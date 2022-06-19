@@ -1,9 +1,9 @@
 <template>
      <section id="sidebar" v-bind:class="{hide: this.isActive}">
-		<a  class="brand"><i class='bx bxs-smile icon'></i> BARC </a>
+		<a  class="brand"><i class='bx bxs-smile icon'></i> CMS </a>
 		<div class="sidebar-avartar">
                           <div>
-                               <img src="../../assets/My project.png" width="70px" height="70px" alt=""  >
+                               <img src="../../assets/chef_logo.jpg" width="70px" height="70px" alt=""  >
                           </div>
                           <div class="avartar-info">
                               <div class="avartar-text">
@@ -21,17 +21,20 @@
 			<li>
 				<ul>
 					<li>
-						<router-link active-class="active" to="/dashboard/country" ><i class='bx bxs-chart icon' ></i> Users</router-link>
+						<router-link active-class="active" to="/dashboard/user" ><i class='bx bxs-chart icon' ></i> Users</router-link>
 					</li>
 
 					<li>
-						<router-link active-class="active" to="/dashboard/division"><i class='bx bxs-chart icon' ></i> Chefs</router-link></li>
+						<router-link active-class="active" to="/dashboard/chef"><i class='bx bxs-chart icon' ></i> Chefs</router-link></li>
 					<li>
-						<router-link active-class="active" to="/dashboard/district"><i class='bx bxs-chart icon' ></i>Products</router-link>
+						<router-link active-class="active" to="/dashboard/product"><i class='bx bxs-chart icon' ></i>Products</router-link>
+					</li>
+					<li>
+					<router-link active-class="active" to="/dashboard/coupon"><i class='bx bxs-chart icon' ></i>Coupons</router-link>
 					</li>
 
 					<li>
-						<router-link active-class="active" to="/dashboard/thana"><i class='bx bxs-chart icon' ></i> Packages </router-link>
+						<router-link active-class="active" to="/dashboard/package"><i class='bx bxs-chart icon' ></i> Packages </router-link>
 					</li>
 
 

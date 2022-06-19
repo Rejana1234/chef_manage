@@ -1,32 +1,32 @@
 <template>
-    <div id="AddCountry">
-        <form class="AddCountry-form" v-on:submit.prevent="addCountry">
+    <div id="AddCoupon">
+        <form class="AddCoupon-form" v-on:submit.prevent="addCoupon">
 
-             <h2>Add Country</h2>
+             <h2>Add Coupon</h2>
 
             <div class="form-group">
-                <input type="name" v-model="countryData.name_en" name="name_en" id="name_en" placeholder="Enter Country Name(EN)" class="box">
-                <span v-if="errors.name_en" class="danger_text">{{errors.name_en[0]}}</span>
+                <input type="name" v-model="couponData.name_en" name="title" id="title" placeholder="Enter Coupon Title" class="box">
+                <span v-if="errors.title" class="danger_text">{{errors.title[0]}}</span>
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="countryData.name_bn" name="name_bn" id="name_bn" placeholder="Enter Country Name(BN)" class="box">
-                <span v-if="errors.name_bn" class="danger_text">{{errors.name_bn[0]}}</span>
+                <input type="name" v-model="couponData.name_bn" name="code" id="code" placeholder="Enter Coupon Code" class="box">
+                <span v-if="errors.code" class="danger_text">{{errors.code[0]}}</span>
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="countryData.code_en" name="code_en" id="code_en" placeholder="Enter Country Name(EN)" class="box">
-                <span v-if="errors.code_en" class="danger_text">{{errors.code_en[0]}}</span>
+                <input type="name" v-model="couponData.price" name="price" id="price" placeholder="Enter Coupon Price" class="box">
+                <span v-if="errors.price" class="danger_text">{{errors.price[0]}}</span>
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="countryData.code_bn" name="code_bn" id="code_bn" placeholder="Enter Country Name(BN)" class="box">
-                <span v-if="errors.code_bn" class="danger_text">{{errors.code_bn[0]}}</span>
+                <input type="name" v-model="couponData.status" name="status" id="status" placeholder="Enter Coupon Status" class="box">
+                <span v-if="errors.status" class="danger_text">{{errors.status[0]}}</span>
             </div>
 
             <div class="button">
                 <div>
-                    <router-link to="/dashboard/country">
+                    <router-link to="/dashboard/coupon">
                         <button type="button"> Back </button>
                     </router-link>
                     <button type="submit"> Save </button>
@@ -42,7 +42,7 @@
 import {mapState} from 'vuex';
 
 export default {
-    name: 'AddCountry',
+    name: 'AddCoupon',
 
    components: {
      
@@ -50,11 +50,11 @@ export default {
 
    data() {
      return {
-       countryData:{
-           name_en: '',
-           name_bn: '',
-           code_en: '',
-           code_bn: ''
+       couponData:{
+           title: '',
+           code: '',
+           price: '',
+           status: ''
        },
 
         errors: {}
@@ -63,7 +63,7 @@ export default {
 
    computed: {
        ...mapState({
-           message: state => state.country.success_message
+           message: state => state.coupon.success_message
        })
    },
 
@@ -76,26 +76,26 @@ export default {
    },
 
    methods: {
-       addCountry: async function(){
+       addCoupon: async function(){
            try {
                let formData = new FormData();
-               formData.append('name_en', this.countryData.name_en);
-               formData.append('name_bn', this.countryData.name_bn);
-               formData.append('code_en', this.countryData.code_en);
-               formData.append('code_bn', this.countryData.code_bn);
+               formData.append('title', this.couponData.title);
+               formData.append('code', this.couponData.code);
+               formData.append('price', this.couponData.price);
+               formData.append('status', this.couponData.status);
 
-               await this.$store.dispatch('country/add_country', formData).then(() => {
-                   this.$swal.fire({
-                       toast: true,
-                       position: 'top-end',
-                       icon: 'success',
-                       title: this.message,
-                       showConfirmButton: false,
-                       timer: 1500
-                   });
+            //    await this.$store.dispatch('coupon/add_coupon', formData).then(() => {
+            //        this.$swal.fire({
+            //            toast: true,
+            //            position: 'top-end',
+            //            icon: 'success',
+            //            title: this.message,
+            //            showConfirmButton: false,
+            //            timer: 1500
+            //        });
 
-                   this.countryData = {};
-               })
+            //        this.couponData = {};
+            //    })
            }catch (e) {
                switch (e.response.status)
                {
@@ -118,13 +118,13 @@ export default {
 
 <style scoped>
 
-#AddCountry{
+#AddCoupon{
     display: flex;
     justify-content: center;
     margin-top: 100rem;
 }
 
-.AddCountry-form{
+.AddCoupon-form{
     width: 95%;
     position: absolute;
     text-align: center;
@@ -134,11 +134,11 @@ export default {
     background:#eee;
     box-shadow: var(--box-shadow);
 }
-.AddCountry-form h2{
+.AddCoupon-form h2{
     display: flex;
     justify-content: left;
 }
- .AddCountry-form .box{
+ .AddCoupon-form .box{
     width: 100%;
     margin: .7rem 0;
     background: rgb(252, 250, 252);
@@ -149,13 +149,13 @@ export default {
     text-transform: none;
 }
 
-.AddCountry-form p{
+.AddCoupon-form p{
     font-size: 1.4rem;
     padding: .5rem 0;
     color: var(--light-color);
 }
 
-.AddCountry-form p a{
+.AddCoupon-form p a{
     color: var(--orange);
     text-decoration: underline;
 }

@@ -1,37 +1,29 @@
 <template>
-    <div id="EditUser">
-        <form class="EditUser-form" v-on:submit.prevent="editUser">
-            <h2>Edit User</h2>
+    <div id="EditProduct">
+        <form class="EditProduct-form" v-on:submit.prevent="editProduct">
+            <h2>Edit Product</h2>
             <div class="form-group">
-                <input type="name" v-model="editUserList.name" name="name" id="name" placeholder="Enter User Name" class="box">
+                <input type="name" v-model="editProductList.product_name" name="product_name" id="product_name" placeholder="Enter Product Name" class="box">
 
             </div>
             <div class="form-group">
-                <input type="name" v-model="editUserList.email" name="email" id="email" placeholder="Enter Your Email" class="box">
+                <input type="name" v-model="editProductList.stoke" name="stoke" id="stoke" placeholder="Enter Product Stok details" class="box">
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="editUserList.dob" name="dob" id="dob" placeholder="Enter Your DOB" class="box">
+                <input type="name" v-model="editProductList.details" name="details" id="details" placeholder="Enter Product Details" class="box">
 
             </div>
             <div class="form-group">
-                <input type="name" v-model="editUserList.p_no" name="p_no" id="p_no" placeholder="Enter Your Phone number" class="box">
+                <input type="name" v-model="editProduct.time_date" name="time_date" id="time_date" placeholder="Enter Product Duration" class="box">
             </div>
             <div class="form-group">
-                <input type="name" v-model="editUserList.address" name="address" id="address" placeholder="Enter your Address" class="box">
-            </div>
-
-            <div class="form-group">
-                <input type="name" v-model="editUserList.password" name="password" id="password" placeholder="Enter The Password" class="box">
-
-            </div>
-            <div class="form-group">
-                <input type="name" v-model="editUserList.con_password" name="con_password" id="con_password" placeholder="Enter Con_Password Name(BN)" class="box">
+                <input type="name" v-model="editProduct.price" name="price" id="price" placeholder="Enter Product Price" class="box">
             </div>
 
             <div class="button">
                 <level>
-                    <router-link to="/dashboard/user">
+                    <router-link to="/dashboard/product">
                         <button type="button"> Back </button>
                     </router-link>
                 </level>
@@ -49,7 +41,7 @@
     import {mapState, mapActions} from 'vuex';
 
     export default {
-        name: 'MyEditUser',
+        name: 'MyEditProduct',
 
         data(){
             return{
@@ -59,35 +51,34 @@
 
         computed: {
             ...mapState({
-                editUserList: state => state.user.user,
-                message: state => state.user.success_message
+                editProductList: state => state.product.product,
+                message: state => state.product.success_message
             })
         },
 
         mounted(){
-            this.getEditUser(this.$route.params.id);
+            this.getEditProduct(this.$route.params.id);
         },
 
         methods: {
             ...mapActions({
-                getEditUser: 'user/edit_user'
+                getEditProduct: 'product/edit_product'
             }),
 
-            editUser: async function(){
+            editCountry: async function(){
                 try {
                     let id = this.$route.params.id;
                     let formData = new FormData();
 
-                    formData.append('name', this.editUserList.name);
-                    formData.append('email', this.editUserList.email);
-                    formData.append('dob', this.editUserList.dob);
-                    formData.append('p_no', this.editUserList.p_no);
-                    formData.append('address', this.editUserList.address);
-                    formData.append('password', this.editUserList.password);
-                    formData.append('con_password', this.editUserList.con_password);
+                    formData.append('product_name', this.editProductList.product_name);
+                    formData.append('stoke', this.editProductList.stoke);
+                    formData.append('details', this.editProductList.details);
+                    formData.append('time_date', this.editProductList.time_date);
+                    formData.append('price', this.editProductList.price);
+
                     formData.append('_method', 'PUT');
 
-                    await this.$store.dispatch('user/update_user', {id:id, data:formData}).then(() => {
+                    await this.$store.dispatch('product/update_product', {id:id, data:formData}).then(() => {
                         this.$swal.fire({
                             toast: true,
                             position: 'top-end',
@@ -96,7 +87,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        this.getEditUser(this.$route.params.id);
+                        this.getEditProduct(this.$route.params.id);
                     })
 
                 }catch (e) {
@@ -108,7 +99,7 @@
 </script>
 
 <style scoped>
-    .AddUser-form{
+    .AddProduct-form{
         width: 96rem;
         position: absolute;
         text-align: center;
@@ -118,11 +109,11 @@
         background:#eee;
         box-shadow: var(--box-shadow);
     }
-    .AddUser-form h2{
+    .AddProduct-form h2{
         display: flex;
         justify-content: left;
     }
-    .AddUser-form .box{
+    .AddProduct-form .box{
         width: 100%;
         margin: .7rem 0;
         background: rgb(252, 250, 252);
@@ -133,13 +124,13 @@
         text-transform: none;
     }
 
-    .AddUser-form p{
+    .AddProduct-form p{
         font-size: 1.4rem;
         padding: .5rem 0;
         color: var(--light-color);
     }
 
-    .AddUser-form p a{
+    .AddProduct-form p a{
         color: var(--orange);
         text-decoration: underline;
     }
@@ -163,13 +154,13 @@
         font-size: 12px;
     }
 
-#EditUser{
+#EditProduct{
     display: flex;
     justify-content: center;
     margin-top: 100rem;
 }
 
-.EditUser-form{
+.EditProduct-form{
     width: 95%;
     position: absolute;
     text-align: center;
@@ -179,11 +170,11 @@
     background:#eee;
     box-shadow: var(--box-shadow);
 }
-.EditUser-form h2{
+.EditProduct-form h2{
     display: flex;
     justify-content: left;
 }
- .EditUser-form .box{
+ .EditProduct-form .box{
     width: 100%;
     margin: .7rem 0;
     background: rgb(252, 250, 252);
@@ -194,13 +185,13 @@
     text-transform: none;
 }
 
-.EditUser-form p{
+.EditProduct-form p{
     font-size: 1.4rem;
     padding: .5rem 0;
     color: var(--light-color);
 }
 
-.EditUser-form p a{
+.EditProduct-form p a{
     color: var(--orange);
     text-decoration: underline;
 }

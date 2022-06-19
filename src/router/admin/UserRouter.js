@@ -1,5 +1,5 @@
 import User from '../../views/admin/User/User';
-import AddUser from '../../views/admin/User/AddUser';
+//import AddUser from '../../views/admin/User/AddUser';
 export default[
     {
         path:'user',
@@ -7,10 +7,8 @@ export default[
         component: User
     },
     {
-        
-            path:'adduser',
-            name:'AddUser',
-            component: AddUser
-    
+        path: 'edit_user/:id',
+        name: 'EditUser',
+        component: () => import('../../views/admin/User/EditUser.vue')
     }
 ]
