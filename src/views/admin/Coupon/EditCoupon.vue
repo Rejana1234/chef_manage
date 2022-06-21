@@ -3,31 +3,35 @@
         <form class="EditCoupon-form" v-on:submit.prevent="editCoupon">
             <h2>Edit Coupon</h2>
             <div class="form-group">
-                <input type="name" v-model="editCouponList.title" name="title" id="title" placeholder="Enter Coupon Title" class="box">
+                <input type="name" v-model="editCouponList.title" name="title" id="title"
+                    placeholder="Enter Coupon Title" class="box">
 
             </div>
             <div class="form-group">
-                <input type="name" v-model="editCouponList.code" name="code" id="code" placeholder="Enter Coupon Code" class="box">
+                <input type="name" v-model="editCouponList.code" name="code" id="code" placeholder="Enter Coupon Code"
+                    class="box">
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="editCouponList.price" name="price" id="price" placeholder="Enter Coupon Price" class="box">
+                <input type="name" v-model="editCouponList.price" name="price" id="price"
+                    placeholder="Enter Coupon Price" class="box">
 
             </div>
             <div class="form-group">
-                <input type="name" v-model="editCoupon.status" name="status" id="status" placeholder="Enter Coupon Status" class="box">
+                <input type="name" v-model="editCouponList.status" name="status" id="status"
+                    placeholder="Enter Coupon Status" class="box">
+
             </div>
+
 
             <div class="button">
-                <level>
+                <div>
                     <router-link to="/dashboard/coupon">
                         <button type="button"> Back </button>
                     </router-link>
-                </level>
-
-                <level>
                     <button type="submit"> Edit </button>
-                </level>
+                </div>
+
             </div>
 
         </form>
@@ -48,7 +52,7 @@
 
         computed: {
             ...mapState({
-                editCouponList: state => state.coupon.coupon,
+                editCouponList: state => state.coupons.coupon,
                 message: state => state.coupon.success_message
             })
         },
@@ -59,10 +63,10 @@
 
         methods: {
             ...mapActions({
-                getEditCoupo: 'coupon/edit_coupon'
+                getEditCoupon: 'coupons/edit_coupon'
             }),
 
-            editCountry: async function(){
+            editCoupon: async function(){
                 try {
                     let id = this.$route.params.id;
                     let formData = new FormData();
@@ -73,7 +77,7 @@
                     formData.append('status', this.editCouponList.status);
                     formData.append('_method', 'PUT');
 
-                    await this.$store.dispatch('coupon/update_coupon', {id:id, data:formData}).then(() => {
+                    await this.$store.dispatch('coupons/update_coupon', {id:id, data:formData}).then(() => {
                         this.$swal.fire({
                             toast: true,
                             position: 'top-end',

@@ -4,7 +4,7 @@ import ResetPassword from '../../views/auth/ResetPassword'
 
 export default [
     {
-        path:'/' ,
+        path:'/login' ,
         name: 'Login',
         component: Login
     },

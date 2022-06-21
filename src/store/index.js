@@ -9,11 +9,21 @@ import * as getters from './getters'
 import * as mutations from './mutations'
 import * as actions from './actions'
 
+//import modules
+
+import coupons from './Modules/coupon';
+import packagers from './Modules/packager';
+import chefs from './Modules/chef';
+
 export default new Vuex.Store({
     state,
     getters,
     mutations,
-    actions
+    actions,
 
-   
+    modules: {
+        coupons,
+        packagers,
+        chefs,
+    }
 })

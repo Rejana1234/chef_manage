@@ -2,25 +2,29 @@
     <div id="AddCoupon">
         <form class="AddCoupon-form" v-on:submit.prevent="addCoupon">
 
-             <h2>Add Coupon</h2>
+            <h2>Add Coupon</h2>
 
             <div class="form-group">
-                <input type="name" v-model="couponData.name_en" name="title" id="title" placeholder="Enter Coupon Title" class="box">
+                <input type="name" v-model="couponData.title" name="title" id="title" placeholder="Enter Coupon Title"
+                    class="box">
                 <span v-if="errors.title" class="danger_text">{{errors.title[0]}}</span>
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="couponData.name_bn" name="code" id="code" placeholder="Enter Coupon Code" class="box">
+                <input type="name" v-model="couponData.code" name="code" id="code" placeholder="Enter Coupon Code"
+                    class="box">
                 <span v-if="errors.code" class="danger_text">{{errors.code[0]}}</span>
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="couponData.price" name="price" id="price" placeholder="Enter Coupon Price" class="box">
+                <input type="name" v-model="couponData.price" name="price" id="price" placeholder="Enter Coupon Price"
+                    class="box">
                 <span v-if="errors.price" class="danger_text">{{errors.price[0]}}</span>
             </div>
 
             <div class="form-group">
-                <input type="name" v-model="couponData.status" name="status" id="status" placeholder="Enter Coupon Status" class="box">
+                <input type="name" v-model="couponData.status" name="status" id="status"
+                    placeholder="Enter Coupon Status" class="box">
                 <span v-if="errors.status" class="danger_text">{{errors.status[0]}}</span>
             </div>
 
@@ -44,10 +48,6 @@ import {mapState} from 'vuex';
 export default {
     name: 'AddCoupon',
 
-   components: {
-     
-   },
-
    data() {
      return {
        couponData:{
@@ -63,7 +63,7 @@ export default {
 
    computed: {
        ...mapState({
-           message: state => state.coupon.success_message
+           message: state => state.coupons.success_message
        })
    },
 
@@ -84,18 +84,20 @@ export default {
                formData.append('price', this.couponData.price);
                formData.append('status', this.couponData.status);
 
-            //    await this.$store.dispatch('coupon/add_coupon', formData).then(() => {
-            //        this.$swal.fire({
-            //            toast: true,
-            //            position: 'top-end',
-            //            icon: 'success',
-            //            title: this.message,
-            //            showConfirmButton: false,
-            //            timer: 1500
-            //        });
+               await this.$store.dispatch('coupons/add_coupon', formData).then(() => {
+                   this.$swal.fire({
+                       toast: true,
+                       position: 'top-end',
+                       icon: 'success',
+                       title: this.message,
+                       showConfirmButton: false,
+                       timer: 1500
+                   });
 
-            //        this.couponData = {};
-            //    })
+                console.log('add coupons');
+
+                   this.couponData = {};
+               })
            }catch (e) {
                switch (e.response.status)
                {
@@ -110,6 +112,8 @@ export default {
                        });
                        break;
                }
+
+            console.log(e);
            }
        }
    }

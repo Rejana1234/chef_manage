@@ -2,7 +2,7 @@
    <div id="chefs">
 
        <div class="add-chefs">
-           <router-link to="/dashboard/addchefs">
+           <router-link to="/dashboard/addchef">
                <button class="add_new"><i class="fa-solid fa-circle-plus"></i> Add New</button>
            </router-link>
        </div>
@@ -24,14 +24,9 @@
            <tbody>
             <tr v-show="chefs.length" v-for="(chef) in chefs" :key="chef.id">
                 <td>{{ chef.id }}</td>
+                <td>{{ chef.image }}</td>
                 <td>{{ chef.name }}</td>
-                <td>{{ chef.email }}</td>
-                <td>{{ chef.dob }}</td>
-                <td>{{ chef.p_no }}</td>
-                <td>{{ chef.gender }}</td>
-                <td>{{ chef.address }}</td>
-                <td>{{ chef.password }}</td>
-                <td>{{ chef.con_password }}</td>
+                <td>{{ chef.experience }}</td>
                 <td colspan="2">
 
                     <button class="delete" v-on:click="deleteChef(chef)"><i class="fa-solid fa-trash"></i>  Delete</button>
@@ -68,14 +63,9 @@ export default {
        let sortOrders = {};
        let columns = [
            {label: '#Sl', name: 'chef_id' },
+           {label: 'Image', name: 'image'},
            {label: 'Name', name: 'name'},
-           {label: 'Email', name: 'email'},
-           {label: 'DOB', name: 'dob'},
-           {label: 'Phone', name: 'p_no'},
-           {label: 'Gender', name: 'gender'},
-           {label: 'Address', name: 'address'},
-           {label: 'Password', name: 'password'},
-           {label: 'Con_Password', name: 'con_password'},
+           {label: 'Experience', name: 'experience'},
            {label: 'Action', name: 'action'},
        ];
        columns.forEach((column) => {
@@ -135,7 +125,7 @@ export default {
            params.append('column', this.tableData.column);
            params.append('dir', this.tableData.dir);
 
-           return http().get('country/getData?'+params)
+           return http().get('chef/getData?'+params)
                .then(response => {
                    this.chefs = response.data.data.data;
                    this.pagination = response.data.data;

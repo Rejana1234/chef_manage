@@ -1,10 +1,12 @@
 <template>
     <div id="login">
-        <form action="" class="login-form">
-            <img src="../../assets/chef_logo.jpg" alt="Logo" width="100" height="100"><br><br>
+        <form action="" class="login-form" v-on:submit.prevent="login">
+            <img src="../../assets/chef_logo.jpg" alt="Logo" width="100" height="200"><br><br>
 
-            <input type="email" name="email" id="" placeholder="Enter email" class="box">
-            <input type="password" name="password" id="" placeholder="Enter password" class="box">
+            <input type="text" v-model="loginData.email" name="email" id="email"
+                placeholder="Enter user email" class="box">
+            <input type="password" v-model="loginData.password" name="password" id="password"
+                placeholder="Enter password" class="box">
             <p>Forget password ? <a href="/forget-password">Click here</a></p>
             <p>Don't have an account <a href="#">Create new</a></p>
             <input type="submit" value="login now" class="btn">
@@ -14,14 +16,46 @@
 
 <script>
 export default{
-    name : 'CMSLogin'
+    name : 'CMSLogin',
+    data(){
+        return{
+            loginData: {
+                email: '',
+                password: ''
+            }
+        }
+    },
+
+    methods: {
+        login: async function()
+        {
+            try{
+                let formData = new FormData();
+
+                formData.append('email', this.loginData.email);
+                formData.append('password', this.loginData.password);
+
+                await this.$store.dispatch('login', formData).then(() => {
+                    this.$router.push({path: '/dashboard'});
+                    this.loginData = {};
+                });
+
+            }catch(e){
+                console.log(e);
+            }
+        }
+    }
+
+
 }
 </script>
 
 <style scoped>
+
 #login{
     display: flex;
     justify-content: center;
+    background-image: url(../../assets/chef_bg.jpg);
 }
 .login_heading{
     text-align: center;
@@ -31,7 +65,7 @@ export default{
     width: 40rem;
     position: absolute;
     text-align: center;
-    top: 10%;
+    top: 20%;
     padding: 2rem;
     border-radius: .5rem;
     background: rgb(218, 164, 232);

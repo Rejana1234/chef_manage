@@ -1,6 +1,8 @@
+import store from '@/store';
 import Dashboard from '../../views/admin/Mydashboard';
 import ChefRouter from './ChefRouter';
 import CouponRouter from './CouponRouter';
+import PackageRouter from './PackageRouter';
 import ProductRouter from './ProductRouter';
 import UserRouter from './UserRouter';
 
@@ -20,8 +22,18 @@ export default[
             ...UserRouter,
             ...CouponRouter,
             ...ChefRouter,
-            ...ProductRouter
+            ...ProductRouter,
+            ...PackageRouter,
 
-        ]
+        ],
+        beforeEnter(to, form, next){
+            if (!store.getters['AuthToken']){
+                return next({
+                    name: 'Login'
+                });
+            }else{
+                next();
+            }
+        },
     }
 ]

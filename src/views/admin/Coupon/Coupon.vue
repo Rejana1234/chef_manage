@@ -131,7 +131,7 @@ export default {
            params.append('column', this.tableData.column);
            params.append('dir', this.tableData.dir);
 
-           return http().get('country/getData?'+params)
+            return http().get('coupon/getData?'+params)
                .then(response => {
                    this.coupons = response.data.data.data;
                    this.pagination = response.data.data;
@@ -153,25 +153,25 @@ export default {
             return array.findIndex(i => i[key] == value)
         },
 
-        // deleteCoupon: async function(coupon){
-        //    try {
-        //        let coupon_id = coupon.id;
+        deleteCoupon: async function(coupon){
+           try {
+               let coupon_id = coupon.id;
 
-        //        await this.$store.dispatch('coupon/delete_coupon', coupon_id).then(() => {
-        //            this.$swal.fire({
-        //                toast: true,
-        //                position: 'top-end',
-        //                icon: 'success',
-        //                title: this.message,
-        //                showConfirmButton: false,
-        //                timer: 1500
-        //            });
-        //            this.getAllCoupon();
-        //        })
-        //    }catch (e) {
-        //        console.log(e);
-        //    }
-        // }
+               await this.$store.dispatch('coupons/delete_coupon', coupon_id).then(() => {
+                   this.$swal.fire({
+                       toast: true,
+                       position: 'top-end',
+                       icon: 'success',
+                       title: this.message,
+                       showConfirmButton: false,
+                       timer: 1500
+                   });
+                   this.getAllCoupon();
+               })
+           }catch (e) {
+               console.log(e);
+           }
+        }
 
     },
 };

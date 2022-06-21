@@ -22,7 +22,7 @@
 				<ul class="profile-link"  v-bind:class="{show: isshow}">
 					<li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
 					<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
-					<li><a href="#"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
+					<li><a href="#" v-on:click="logout"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
 				</ul>
 			</div>
     </nav>
@@ -42,7 +42,17 @@ export default {
    methods: {
         profileDropdown() {
             this.isshow = !this.isshow;
-        }
+        },
+
+		logout: async function(){
+			try{
+				await this.$store.dispatch('logout').then(() => {
+					this.$router.push({ name: 'Login'});
+				})
+			}catch(e){
+				console.log(e);
+			}
+		}
     },
    
 };
